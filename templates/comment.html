@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>comment</title>
+    {% load static %}
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body>
+{% block content %}
+
+<style>
+        body
+        {
+            padding:35px;
+            margin:25px;
+            background-color:rgb(240, 240, 240);
+        }
+        h3
+        {
+                 text-align:left;
+
+        }
+        .form-control
+        {
+            color:white;
+            background-color:black;
+            width:70%;
+        }
+
+</style>
+
+
+    <h3>Comment post</h3>
+       <form method="POST" class="form-control">
+        {% csrf_token %}
+        {{ form.as_p}}
+        <button type="submit"  class="btn btn-info">Post</button>
+           <a href="{% url 'home' %}"  type="button" class="btn btn-dark btn-small">Back</a>
+    </form>
+
+{% endblock content %}
+
+
+<script>
+
+    <script src="{% static 'https://code.jquery.com/jquery-3.2.1.slim.min.js'%}" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="{% static 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'%}" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="{% static 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'%}" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</script>
+
+
+</body>
+</html>

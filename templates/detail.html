@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Article</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+{% block content %}
+
+<style>
+    .jumbotron
+    {
+        padding:50px;
+        margin:30px;
+        background-color:black;
+        color:white;
+    }
+
+    .like
+    {
+        padding:10px;
+        margin:10px;
+    }
+    h2
+    {
+        font-family:"Time New Roman";
+        text-align:left;
+        text-transform: uppercase;
+    }
+    img
+    {
+        opacity: 0.8;
+        width:60%;
+        height:70%;
+    }
+    img:hover
+    {
+        opacity: 1;
+    }
+    p
+    {
+        font-family : 'Monospace';
+        text-transform: captalize;
+    }
+    h3
+    {
+        text-align:center;
+
+    }
+    a:hover
+    {
+        color:red;
+
+
+    }
+    .btn-primary:hover
+    {
+        color:black;
+    }
+    .btn-danger:hover
+    {
+        color:green;
+        background-color:black
+
+    }
+    .btn-warning
+    {
+
+        padding:15px;
+        margin-left:20px;
+        min-width:9%;
+    }
+    .btn-warning:hover
+    {
+        background-color:Tomato;
+
+    }
+</style>
+
+
+<div class="jumbotron ">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>{{post.title}}</h2>
+            <img src="{{post.image.url}}" >
+            <p><b>By:{{post.author}}</b></p>
+            <p>{{post.body}}</p>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-8">
+        <div class="container">
+
+                <h3>Comments...</h3>
+
+                {% if not post.comments.all %}
+                    No Comment <a href="{% url 'add_comment' post.pk %}">Add one</a>
+                {% else %}
+
+                <a href="{% url 'add_comment' post.pk %}">Add Comment</a>
+                <br>
+                    {% for comment in post.comments.all %}
+                        <strong>{{comment.name}}</strong>
+                        {{comment.date}}
+                        <br>
+                        <p>{{comment.body}}</p>
+                        <br><br>
+                    {% endfor %}
+                {% endif %}
+            </div>
+    </div>
+    <div class="col-md-4">
+    <form action="" method="POST" class="ui form">
+        {% csrf_token %}
+           <input type="hidden" name="post_id" value="{{ post.id}}">
+           {% if user not in post.liked.all %}
+             <button class="btn btn-primary" type="submit">Like</button><br>
+           {% else %}
+            <button class="btn btn-info" type="submit">Unlike</button>
+            {% endif %}
+       </form>
+        <strong>{{post.liked.all.count}}likes</strong>
+        </div>
+    </div>
+</div>
+<br>
+
+<a href="{% url 'home' %}"  type="button" class="btn btn-warning"> < Previous</a>
+<br>
+<hr>
+
+{% endblock content %}
+
+
+<script>
+
+    <script src="{% static 'https://code.jquery.com/jquery-3.2.1.slim.min.js'%}" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="{% static 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'%}" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="{% static 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'%}" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</script>
+
+</body>
+</html>
